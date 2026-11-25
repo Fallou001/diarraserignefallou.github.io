@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Serigne Fallou DIARRA, géomaticien</title>
+<title>Serigne Fallou Diarra, géomaticien</title>
 <meta name="description" content="Portfolio de Serigne Fallou Diarra, géomaticien : analyse spatiale, SIG, géomarketing. CV, projets, documents et cartes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +68,10 @@ h2::after{content:"";display:block;width:52px;height:3px;background:var(--gold);
 .tl-i h3{font-size:1.4rem;line-height:1.25;margin-top:.1rem}
 .thumb{display:block;width:100%;border-radius:8px;margin-bottom:1rem;cursor:zoom-in;border:1px solid var(--line);transition:transform .4s}
 .card:hover .thumb{transform:scale(1.02)}
+.pv{display:block;border:1px solid var(--line);border-radius:8px;margin-bottom:1rem;overflow:hidden;background:#fff}
+.pv canvas{display:block;width:100%;height:auto;min-height:120px;max-height:340px;object-fit:cover;object-position:top;transition:transform .4s}
+.card:hover .pv canvas{transform:scale(1.02)}
+.nopdf{display:flex;align-items:center;justify-content:center;min-height:120px;color:var(--mute);font-size:.85rem}
 .dark h2{color:#fff}
 .big{display:inline-block;font:500 clamp(1.5rem,4vw,2.6rem)/1.2 "Newsreader",Georgia,serif;color:#fff;text-decoration:none;border-bottom:2px solid var(--gold);margin-bottom:2rem;word-break:break-all}
 .row{display:flex;flex-wrap:wrap;gap:.8rem}
@@ -106,7 +110,8 @@ footer{background:#071212;color:rgba(255,255,255,.5);text-align:center;padding:1
    - Un document sans "url" affiche son "status" (ex. « À venir »).
    - CV : déposer le PDF dans le dépôt, à côté de ce fichier, sous le nom cv.pdf
    - Photo (facultative) : photo.jpg à côté de ce fichier.
-   - Image d’une carte : champ "img" (ex. cartes/ma-carte.jpg), cliquable en plein écran.
+   - Carte : champ "pdf" (ex. cartes/ma-carte.pdf, l’aperçu de la page 1 est généré tout seul) ou "img" (image cliquable en plein écran).
+   - Mets les fichiers dans un dossier "cartes" du dépôt, avec des noms sans espaces ni accents.
    ====================================================================== */
 const C = {
   profile: {
@@ -147,7 +152,14 @@ const C = {
     // { title: "Titre du document", type: "Mémoire", year: "2027", url: "mon-document.pdf" },
   ],
   maps: [
-    // { title: "Titre de la carte", text: "Une phrase de description.", stack: ["QGIS"], img: "cartes/ma-carte.jpg" },
+    { title: "Atlas Limeil, 6 zones (A3)", pdf: "cartes/atlas-limeil-6-zones-a3.pdf" },
+    { title: "Atlas EV Q12", pdf: "cartes/atlas-ev-q12.pdf" },
+    { title: "ECO6 : la répartition des emplois par catégorie", pdf: "cartes/eco6-repartition-emplois.pdf" },
+    { title: "Nombre de T2 par adresse et par bailleur", pdf: "cartes/nombre-t2-par-bailleur.pdf" },
+    { title: "Aménagements, transports et environnement", pdf: "cartes/amenagements-transports-environnement.pdf" },
+    { title: "Carte de synthèse", img: "cartes/carte-de-synthese.png" },
+    { title: "DP", pdf: "cartes/dp-final.pdf" }
+    // modèle : { title: "Titre", text: "Une phrase.", stack: ["QGIS"], pdf: "cartes/nom.pdf" },
   ],
   skills: [
     { group: "SIG et cartographie", items: ["QGIS", "ArcGIS Pro", "Arcpy", "ArcGIS Experience Builder", "ArcGIS Online", "Geoconcept", "Illustrator", "Inkscape", "Philcarto", "GeoDa"] },
@@ -197,7 +209,11 @@ const defs = [
   ["parcours", "Parcours", C.experience, "tl", r => h("div", { class: "tl-i rv" }, h("div", { class: "when", text: r.when }), h("h3", { text: r.role }), sub(r.org), p(r.text))],
   ["projets", "Projets", C.projects, "grid", (r, i) => card(h("div", { class: "num", text: "0" + (i + 1) }), h("h3", { text: r.title }), p(r.text), pills(r.stack), r.url ? btn(r.url, "Voir en ligne") : null)],
   ["competences", "Compétences", C.skills, "grid", r => card(h("h3", { text: r.group }), pills(r.items))],
-  ["cartes", "Cartes", C.maps, "grid", r => card(r.img ? h("img", { class: "thumb", src: r.img, alt: r.title, loading: "lazy" }) : null, h("h3", { text: r.title }), p(r.text || ""), pills(r.stack), r.url ? btn(r.url, "Ouvrir") : null)],
+  ["cartes", "Cartes", C.maps, "grid", r => card(
+    r.img ? h("img", { class: "thumb", src: r.img, alt: r.title, loading: "lazy" })
+      : r.pdf ? h("a", { class: "pv", href: r.pdf, target: "_blank", rel: "noopener", "aria-label": r.title }, h("canvas", { "data-pdf": r.pdf })) : null,
+    h("h3", { text: r.title }), r.text ? p(r.text) : null, pills(r.stack),
+    r.pdf ? btn(r.pdf, "Ouvrir le PDF") : r.url ? btn(r.url, "Ouvrir") : null)],
   ["documents", "Documents", C.documents, "grid", r => card(h("div", { class: "when", text: r.year }), h("h3", { text: r.title }), sub(r.type), r.url ? btn(r.url, "Consulter") : h("span", { class: "soon", text: r.status || "À venir" }))],
   ["formation", "Formation", C.education, "grid", r => card(h("div", { class: "when", text: r.when }), h("h3", { text: r.title }), sub(r.place))],
   ["certifications", "Certifications", C.certs, "grid", r => card(h("h3", { text: r.title }), sub(r.org))]
@@ -238,6 +254,28 @@ document.addEventListener("click", e => {
   if (t) { lb.querySelector("img").src = t.src; lb.classList.add("on"); } else lb.classList.remove("on");
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") lb.classList.remove("on"); });
+
+/* Aperçu de la première page des PDF de cartes (pdf.js, chargé seulement si nécessaire) */
+const pvs = [...document.querySelectorAll("canvas[data-pdf]")];
+if (pvs.length) {
+  const CDN = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/";
+  let ready;
+  const load = () => ready || (ready = new Promise((ok, ko) => {
+    const sc = h("script", { src: CDN + "pdf.min.js" });
+    sc.onload = () => { pdfjsLib.GlobalWorkerOptions.workerSrc = CDN + "pdf.worker.min.js"; ok(); };
+    sc.onerror = ko; document.head.append(sc);
+  }));
+  const pio = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const c = e.target; pio.unobserve(c);
+    load().then(() => pdfjsLib.getDocument(c.dataset.pdf).promise).then(d => d.getPage(1)).then(pg => {
+      const v = pg.getViewport({ scale: 720 / pg.getViewport({ scale: 1 }).width });
+      c.width = v.width; c.height = v.height;
+      return pg.render({ canvasContext: c.getContext("2d"), viewport: v }).promise;
+    }).catch(() => c.replaceWith(h("div", { class: "nopdf", text: "Aperçu indisponible" })));
+  }), { rootMargin: "200px" });
+  pvs.forEach(c => pio.observe(c));
+}
 
 /* Réseau de points spatiaux animé dans l’en-tête, qui réagit à la souris */
 const cv = $("net"), cx = cv.getContext("2d"), hero = $("top");
