@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Serigne Fallou DIARRA, géomaticien</title>
+<title>Serigne Fallou Diarra, géomaticien</title>
 <meta name="description" content="Portfolio de Serigne Fallou Diarra, géomaticien : analyse spatiale, SIG, géomarketing. CV, projets, documents et cartes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -272,7 +272,10 @@ if (pvs.length) {
       const v = pg.getViewport({ scale: 720 / pg.getViewport({ scale: 1 }).width });
       c.width = v.width; c.height = v.height;
       return pg.render({ canvasContext: c.getContext("2d"), viewport: v }).promise;
-    }).catch(() => c.replaceWith(h("div", { class: "nopdf", text: "Aperçu indisponible" })));
+    }).catch(err => {
+      console.error("Aperçu PDF impossible :", c.dataset.pdf, err);
+      c.replaceWith(h("iframe", { src: c.dataset.pdf + "#page=1&view=FitH&toolbar=0&navpanes=0", title: c.dataset.pdf, loading: "lazy", scrolling: "no", style: "width:100%;height:320px;border:0;pointer-events:none;display:block" }));
+    });
   }), { rootMargin: "200px" });
   pvs.forEach(c => pio.observe(c));
 }
