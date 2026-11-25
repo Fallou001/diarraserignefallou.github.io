@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Serigne Fallou Diarra, géomaticien</title>
+<title>Serigne Fallou DIARRA, géomaticien</title>
 <meta name="description" content="Portfolio de Serigne Fallou Diarra, géomaticien : analyse spatiale, SIG, géomarketing. CV, projets, documents et cartes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,8 +110,8 @@ footer{background:#071212;color:rgba(255,255,255,.5);text-align:center;padding:1
    - Un document sans "url" affiche son "status" (ex. « À venir »).
    - CV : déposer le PDF dans le dépôt, à côté de ce fichier, sous le nom cv.pdf
    - Photo (facultative) : photo.jpg à côté de ce fichier.
-   - Carte : champ "pdf" (ex. cartes/ma-carte.pdf, l’aperçu de la page 1 est généré tout seul) ou "img" (image cliquable en plein écran).
-   - Mets les fichiers dans un dossier "cartes" du dépôt, avec des noms sans espaces ni accents.
+   - Carte : champ "pdf" (ex. ma-carte.pdf, l’aperçu de la page 1 est généré tout seul) ou "img" (image cliquable en plein écran).
+   - Dépose les fichiers dans le dépôt, à côté de ce fichier, avec des noms sans espaces ni accents (ou dans un dossier : pdf: "cartes/nom.pdf").
    ====================================================================== */
 const C = {
   profile: {
@@ -152,14 +152,14 @@ const C = {
     // { title: "Titre du document", type: "Mémoire", year: "2027", url: "mon-document.pdf" },
   ],
   maps: [
-    { title: "Atlas Limeil, 6 zones (A3)", pdf: "cartes/atlas-limeil-6-zones-a3.pdf" },
-    { title: "Atlas EV Q12", pdf: "cartes/atlas-ev-q12.pdf" },
-    { title: "ECO6 : la répartition des emplois par catégorie", pdf: "cartes/eco6-repartition-emplois.pdf" },
-    { title: "Nombre de T2 par adresse et par bailleur", pdf: "cartes/nombre-t2-par-bailleur.pdf" },
-    { title: "Aménagements, transports et environnement", pdf: "cartes/amenagements-transports-environnement.pdf" },
-    { title: "Carte de synthèse", img: "cartes/carte-de-synthese.png" },
-    { title: "DP", pdf: "cartes/dp-final.pdf" }
-    // modèle : { title: "Titre", text: "Une phrase.", stack: ["QGIS"], pdf: "cartes/nom.pdf" },
+    { title: "Atlas Limeil, 6 zones (A3)", pdf: "atlas-limeil-6-zones-a3.pdf" },
+    { title: "Atlas EV Q12", pdf: "atlas-ev-q12.pdf" },
+    { title: "ECO6 : la répartition des emplois par catégorie", pdf: "eco6-repartition-emplois.pdf" },
+    { title: "Nombre de T2 par adresse et par bailleur", pdf: "nombre-t2-par-bailleur.pdf" },
+    { title: "Aménagements, transports et environnement", pdf: "amenagements-transports-environnement.pdf" },
+    { title: "Carte de synthèse", img: "carte-de-synthese.png.png" },
+    { title: "DP", pdf: "dp-final.pdf" }
+    // modèle : { title: "Titre", text: "Une phrase.", stack: ["QGIS"], pdf: "nom.pdf" },
   ],
   skills: [
     { group: "SIG et cartographie", items: ["QGIS", "ArcGIS Pro", "Arcpy", "ArcGIS Experience Builder", "ArcGIS Online", "Geoconcept", "Illustrator", "Inkscape", "Philcarto", "GeoDa"] },
